@@ -4,7 +4,7 @@ from rest_framework import serializers
 class TransaccionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Transaccion
-        fields = ('idtransaccion', 'monto', 'fecha', 'nombreTransaccion', 'tipo', 'cuenta_remitente', 'cuenta_receptor')
+        fields = ('idtransaccion', 'monto', 'fecha', 'nombretransaccion', 'tipo', 'cuenta_remitente', 'cuenta_receptor')
 
 
 class BancoSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,7 +16,7 @@ class BancoSerializer(serializers.HyperlinkedModelSerializer):
 class CuentaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Cuenta
-        fields = ('idcuenta', 'nombreCuenta', 'monto', 'idusuario', 'idbancos')
+        fields = ('idcuenta', 'nombrecuenta', 'monto', 'idusuario', 'idbancos')
 
 class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
