@@ -139,41 +139,6 @@ INSERT INTO `usuario` VALUES (1,'debra','chacaliaza','74119091','digimo'),(2,'lu
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping events for database 'banco2'
---
-
---
--- Dumping routines for database 'banco2'
---
---/*!50003 DROP PROCEDURE IF EXISTS `transaccion_deposito` */;
---/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
---/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
---/*!50003 SET @saved_col_connection = @@collation_connection */ ;
---/*!50003 SET character_set_client  = utf8 */ ;
---/*!50003 SET character_set_results = utf8 */ ;
---/*!50003 SET collation_connection  = utf8_general_ci */ ;
---/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
---/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
---DELIMITER ;;
---CREATE DEFINER=`root`@`localhost` PROCEDURE `transaccion_deposito`(in remitente int, in receptor int, monto double, in nombreT varchar(15), in tipo int)
---BEGIN
-	
---    insert into transaccion(monto, fecha, nombreTransaccion,tipo,cuenta_remitente, cuenta_receptor)
---		values(monto,now(),nombreT,tipo,remitente,receptor);
---    update cuenta
---    set cuenta.monto = cuenta.monto-monto
---    where cuenta.idcuenta=remitente;
---	update cuenta
---    set cuenta.monto = cuenta.monto+monto
---    where cuenta.idcuenta=receptor;
---
---END ;;
---DELIMITER ;
---/*!50003 SET sql_mode              = @saved_sql_mode */ ;
---/*!50003 SET character_set_client  = @saved_cs_client */ ;
---/*!50003 SET character_set_results = @saved_cs_results */ ;
---/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Final view structure for view `transacciones`
@@ -187,7 +152,7 @@ UNLOCK TABLES;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
---/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+
 /*!50001 VIEW `transacciones` AS select `c`.`numeroCuenta` AS `numeroCuenta`,`t`.`fecha` AS `fecha`,`t`.`nombreTransaccion` AS `nombreTransaccion`,`t`.`monto` AS `monto` from (`transaccion` `t` join `cuenta` `c` on((`c`.`idcuenta` = `t`.`cuenta_receptor`))) group by `t`.`fecha` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
