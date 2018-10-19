@@ -1,19 +1,20 @@
+from urllib import request
+
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
 
 class TransaccionList(generics.ListCreateAPIView):
+    lookup_field = 'idtransaccion'
     queryset = Transaccion.objects.all()
     serializer_class = TransaccionSerializer
 
-    def get_object(self):
-        queryset = self.queryset
-        obj = get_object_or_404(
-            queryset,
-            pk=self.kwargs['pk'],
-        )
-        return obj
+
+
 
 class BancoList(generics.ListCreateAPIView):
     queryset = Banco.objects.all()
