@@ -34,14 +34,14 @@ class TransaccionNew(generics.CreateAPIView):
         t1 = Transaccion(cuenta_remitente=cuenta_remitente,
                          cuenta_receptor=cuenta_receptor,
                          monto=monto,
-                         nombretransaccion=nombretransaccion,
-                         tipo=tipo)
+                         nombretransaccion='RET',
+                         tipo=1)
 
         t2 = Transaccion(cuenta_remitente=cuenta_receptor,
                          cuenta_receptor=cuenta_remitente,
                          monto=monto,
-                         nombretransaccion=nombretransaccion,
-                         tipo=tipo)
+                         nombretransaccion='DEP',
+                         tipo=2)
         # Transaccion.objects.bulk_create([t1, t2])
         res = Transaccion.objects.bulk_create([t2, t1])
         serializer = self.get_serializer(res)
