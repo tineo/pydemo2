@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'account/$', CuentaList.as_view(), name='account'),
     url(r'account/(\d)/$', CuentaList.as_view(), name='account'),
     url(r'accountbynumber/$', CuentaNumber.as_view(), name='account'),
+    url(r'login/$', Login.as_view(), name='login'),
 ]

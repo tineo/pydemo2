@@ -107,3 +107,10 @@ class UsuarioList(generics.ListCreateAPIView):
             pk=self.kwargs['pk'],
         )
         return obj
+
+class Login(generics.ListAPIView):
+    serializer_class = UsuarioSerializer
+    def get_queryset(self):
+        number = self.request.query_params.get('number')
+        passw = self.request.query_params.get('pass')
+        return Usuario.objects.filter(Q(usuario=number) | Q(pass_field=passw))
