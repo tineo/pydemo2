@@ -72,7 +72,7 @@ class BancoList(generics.ListCreateAPIView):
         )
         return obj
 
-class CuentaList(generics.ListCreateAPIView):
+class CuentaList(generics.RetrieveUpdateDestroyAPIView):
     queryset = Cuenta.objects.all()
     serializer_class = CuentaSerializer
 
@@ -83,6 +83,18 @@ class CuentaList(generics.ListCreateAPIView):
             pk=self.kwargs['pk'],
         )
         return obj
+
+    def retrieve(self, request, pk=None):
+        queryset = Cuenta.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = CuentaSerializer(user)
+        return Response(serializer.data)
+
+class CuentaNumber(generics.ListAPIView):
+    serializer_class = CuentaSerializer
+    def get_queryset(self):
+        numero = self.request.query_params.get('numero')
+        return Cuenta.objects.filter(numerocuenta=numero)
 
 class UsuarioList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()

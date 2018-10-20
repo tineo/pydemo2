@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'bank/$', BancoList.as_view(), name='bank'),
     url(r'user/$', UsuarioList.as_view(), name='user'),
     url(r'account/$', CuentaList.as_view(), name='account'),
+    url(r'account/(\d)/$', CuentaList.as_view(), name='account'),
+    url(r'accountbynumber/$', CuentaNumber.as_view(), name='account'),
 ]
