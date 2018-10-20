@@ -21,4 +21,4 @@ class CuentaSerializer(serializers.HyperlinkedModelSerializer):
 class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Usuario
-        fields = ('idusuario', 'nombre', 'apellido', 'usuario', 'pass')
+        fields = ('idusuario', 'nombre', 'apellido', 'usuario', 'pass_field')
