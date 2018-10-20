@@ -14,15 +14,35 @@ class TransaccionList(generics.ListCreateAPIView):
     queryset = Transaccion.objects.all()
     serializer_class = TransaccionSerializer
 
-class TransaccionNew(generics.CreateAPIView):
+class TransaccionNew(generics.ListCreateAPIView):
     serializer_class = TransaccionSerializer
-    def create(self, request, *args, **kwargs):
 
-        #request.data['ip_addr'] = self.get_ip()
-        #serializer = self.get_serializer(data=request.data)
-        #serializer.is_valid(raise_exception=True)
-        ## perform_create calls serializer.save() which calls the serializer's create() method
-        #self.perform_create(serializer)
+    def get_queryset(self):
+        cuenta_remitente = self.request.query_params.get('cuenta_remitente')
+        cuenta_receptor = self.request.query_params.get('cuenta_receptor')
+        monto = self.request.query_params.get('monto')
+        nombretransaccion = 'TRANSF'
+        tipo = self.request.query_params.get('tipo')
+        t1 = Transaccion(cuenta_remitente=cuenta_remitente,
+                         cuenta_receptor=cuenta_receptor,
+                         monto=monto,
+                         nombretransaccion='RET',
+                         tipo=1)
+
+        t2 = Transaccion(cuenta_remitente=cuenta_receptor,
+                         cuenta_receptor=cuenta_remitente,
+                         monto=monto,
+                         nombretransaccion='DEP',
+                         tipo=2)
+        # Transaccion.objects.bulk_create([t1, t2])
+        res = Transaccion.objects.bulk_create([t2, t1])
+        serializer = self.get_serializer(res)
+
+        # {'email': 'lei
+        # headers = self.get_success_headers(serializer.data)
+        return Response(Transaccion.objects.all().count())
+
+    def create(self, request, *args, **kwargs):
 
         cuenta_remitente = request.data['cuenta_remitente']
         cuenta_receptor = request.data['cuenta_receptor']
