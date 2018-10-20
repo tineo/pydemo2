@@ -51,7 +51,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=15, blank=True, null=True)
     apellido = models.CharField(max_length=25, blank=True, null=True)
     usuario = models.CharField(max_length=15)
-    pass_field = models.CharField(db_column='password', max_length=15)  # Field renamed because it was a Python reserved word.
+    pass_field = models.CharField(db_column='pass', max_length=15)  # Field renamed because it was a Python reserved word.
 
     class Meta:
         managed = False
