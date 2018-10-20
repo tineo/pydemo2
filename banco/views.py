@@ -96,6 +96,12 @@ class CuentaNumber(generics.ListAPIView):
         numero = self.request.query_params.get('numero')
         return Cuenta.objects.filter(numerocuenta=numero)
 
+class CuentaByUser(generics.ListAPIView):
+    serializer_class = CuentaSerializer
+    def get_queryset(self):
+        idusuario = self.request.query_params.get('idusuario')
+        return Cuenta.objects.filter(idusuario=idusuario)
+
 class UsuarioList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
