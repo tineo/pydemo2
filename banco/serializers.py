@@ -16,7 +16,7 @@ class BancoSerializer(serializers.HyperlinkedModelSerializer):
 class CuentaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Cuenta
-        fields = ('idcuenta', 'nombrecuenta', 'monto', 'idusuario', 'idbancos')
+        fields = ('idcuenta', 'numerocuenta', 'monto', 'idusuario', 'idbancos')
 
 class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
