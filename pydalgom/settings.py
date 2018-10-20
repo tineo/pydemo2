@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',
+    #'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -55,11 +55,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
+    #'django.middleware.common.CommonMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'pydalgom.urls'
 
@@ -128,9 +128,9 @@ USE_L10N = True
 USE_TZ = True
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
-if 'sslmode' in DATABASES['default']['OPTIONS']:
-    del DATABASES['default']['OPTIONS']['sslmode']
+#django_heroku.settings(locals())
+#if 'sslmode' in DATABASES['default']['OPTIONS']:
+#    del DATABASES['default']['OPTIONS']['sslmode']
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -150,7 +150,7 @@ STATICFILES_DIRS = [
 ]
 
 # Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
+# https://warehouse.python.ocuenta_remitenterg/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 REST_FRAMEWORK = {
