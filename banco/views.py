@@ -57,7 +57,7 @@ class TransaccionByCliente(generics.ListAPIView):
     serializer_class = TransaccionSerializer
     def get_queryset(self):
         cuenta = self.request.query_params.get('cuenta')
-        return Transaccion.objects.filter((Q(tipo=1) & Q(cuenta_remitente=cuenta)) | (Q(tipo=2) & Q(cuenta_remitente=cuenta)))
+        return Transaccion.objects.filter((Q(tipo=1) & Q(cuenta_remitente=cuenta)) | (Q(tipo=2) & Q(cuenta_receptor=cuenta)))
 
 
 class BancoList(generics.ListCreateAPIView):
