@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -33,7 +35,7 @@ class Cuenta(models.Model):
 class Transaccion(models.Model):
     idtransaccion = models.AutoField(primary_key=True)
     monto = models.FloatField(blank=True, null=True)
-    fecha = models.DateTimeField(blank=True, null=True)
+    fecha = models.DateTimeField(blank=True, default=datetime.now)
     nombretransaccion = models.CharField(db_column='nombreTransaccion', max_length=15, blank=True, null=True)  # Field name made lowercase.
     tipo = models.IntegerField(blank=True, null=True)
     cuenta_remitente = models.IntegerField()

@@ -1,4 +1,4 @@
-from urllib import request
+from datetime import datetime
 
 from rest_framework import generics
 from rest_framework.response import Response
@@ -7,13 +7,57 @@ from rest_framework.viewsets import ModelViewSet
 from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 class TransaccionList(generics.ListCreateAPIView):
     lookup_field = 'idtransaccion'
     queryset = Transaccion.objects.all()
     serializer_class = TransaccionSerializer
 
+class TransaccionNew(generics.CreateAPIView):
+    serializer_class = TransaccionSerializer
+    def create(self, request, *args, **kwargs):
 
+        #request.data['ip_addr'] = self.get_ip()
+        #serializer = self.get_serializer(data=request.data)
+        #serializer.is_valid(raise_exception=True)
+        ## perform_create calls serializer.save() which calls the serializer's create() method
+        #self.perform_create(serializer)
+
+        cuenta_remitente = request.data['cuenta_remitente']
+        cuenta_receptor = request.data['cuenta_receptor']
+
+        monto = request.data['monto']
+        nombretransaccion = 'TRANSF'
+        tipo = request.data['tipo']
+
+        t1 = Transaccion(cuenta_remitente=cuenta_remitente,
+                         cuenta_receptor=cuenta_receptor,
+                         monto=monto,
+                         nombretransaccion=nombretransaccion,
+                         tipo=tipo)
+
+        t2 = Transaccion(cuenta_remitente=cuenta_receptor,
+                         cuenta_receptor=cuenta_remitente,
+                         monto=monto,
+                         nombretransaccion=nombretransaccion,
+                         tipo=tipo)
+        # Transaccion.objects.bulk_create([t1, t2])
+        res = Transaccion.objects.bulk_create([t2, t1])
+        serializer = self.get_serializer(res)
+
+
+        # {'email': 'lei
+        #headers = self.get_success_headers(serializer.data)
+        return Response( Transaccion.objects.all().count())
+
+        # return Transaccion.objects.filter(Q(cuenta_remitente=cuenta) | Q(cuenta_receptor=cuenta))
+
+class TransaccionByCliente(generics.ListAPIView):
+    serializer_class = TransaccionSerializer
+    def get_queryset(self):
+        cuenta = self.request.query_params.get('cuenta')
+        return Transaccion.objects.filter(Q(cuenta_remitente=cuenta) | Q(cuenta_receptor=cuenta))
 
 
 class BancoList(generics.ListCreateAPIView):
