@@ -96,11 +96,22 @@ class CuentaNumber(generics.ListAPIView):
         numero = self.request.query_params.get('numero')
         return Cuenta.objects.filter(numerocuenta=numero)
 
-class CuentaByUser(generics.ListAPIView):
+class CuentaByUserId(generics.ListAPIView):
     serializer_class = CuentaSerializer
     def get_queryset(self):
         idusuario = self.request.query_params.get('idusuario')
         return Cuenta.objects.filter(idusuario=idusuario)
+
+
+
+
+class Login(generics.ListAPIView):
+    serializer_class = UsuarioSerializer
+    def get_queryset(self):
+        number = self.request.query_params.get('number')
+        passw = self.request.query_params.get('pass')
+        return Usuario.objects.filter(Q(usuario=number) | Q(pass_field=passw))
+
 
 class UsuarioList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -113,10 +124,3 @@ class UsuarioList(generics.ListCreateAPIView):
             pk=self.kwargs['pk'],
         )
         return obj
-
-class Login(generics.ListAPIView):
-    serializer_class = UsuarioSerializer
-    def get_queryset(self):
-        number = self.request.query_params.get('number')
-        passw = self.request.query_params.get('pass')
-        return Usuario.objects.filter(Q(usuario=number) | Q(pass_field=passw))
